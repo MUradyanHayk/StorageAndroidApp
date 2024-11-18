@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         internalStoragePhotoAdapter = InternalStoragePhotoAdapter {
-            val isDeletionSuccessful = deletePhotoToInternalStorage(it.name)
+            val isDeletionSuccessful = deletePhotoFromInternalStorage(it.name)
             if (isDeletionSuccessful) {
                 loadPhotosFromInternalStorageIntoRecyclerView()
                 Toast.makeText(this, "Photo successfully deleted", Toast.LENGTH_SHORT).show()
@@ -78,7 +78,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun deletePhotoToInternalStorage(filename: String): Boolean {
+    private fun deletePhotoFromInternalStorage(filename: String): Boolean {
         return try {
             deleteFile(filename)
         } catch (e: IOException) {
@@ -96,7 +96,6 @@ class MainActivity : AppCompatActivity() {
                 InternalStoragePhoto(it.name, bmp)
             } ?: listOf()
         }
-
     }
 
     private fun savePhotoToInternalStorage(filename: String, bmp: Bitmap): Boolean {
