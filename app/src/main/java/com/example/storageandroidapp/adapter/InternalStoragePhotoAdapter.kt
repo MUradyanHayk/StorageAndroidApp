@@ -11,18 +11,19 @@ import com.example.storageandroidapp.InternalStoragePhoto
 import com.example.storageandroidapp.SharedStoragePhoto
 import com.example.storageandroidapp.databinding.ItemPhotoBinding
 
-class InternalStoragePhotoAdapter(private val onPhotoClick: (InternalStoragePhoto) -> Unit) : ListAdapter<InternalStoragePhoto, InternalStoragePhotoAdapter.PhotoViewHolder>(Companion) {
+class InternalStoragePhotoAdapter(private val onPhotoClick: (InternalStoragePhoto) -> Unit) : ListAdapter<InternalStoragePhoto, InternalStoragePhotoAdapter.PhotoViewHolder>(diffUtilCallback) {
     inner class PhotoViewHolder(val binding: ItemPhotoBinding) : RecyclerView.ViewHolder(binding.root)
 
-    companion object : DiffUtil.ItemCallback<InternalStoragePhoto>() {
-        override fun areItemsTheSame(oldItem: InternalStoragePhoto, newItem: InternalStoragePhoto): Boolean {
-            return oldItem.name == newItem.name && oldItem.bmp.sameAs(newItem.bmp)
-        }
+    companion object {
+        val diffUtilCallback = object : DiffUtil.ItemCallback<InternalStoragePhoto>() {
+            override fun areItemsTheSame(oldItem: InternalStoragePhoto, newItem: InternalStoragePhoto): Boolean {
+                return oldItem.name == newItem.name && oldItem.bmp.sameAs(newItem.bmp)
+            }
 
-        override fun areContentsTheSame(oldItem: InternalStoragePhoto, newItem: InternalStoragePhoto): Boolean {
-            return oldItem == newItem
+            override fun areContentsTheSame(oldItem: InternalStoragePhoto, newItem: InternalStoragePhoto): Boolean {
+                return oldItem == newItem
+            }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PhotoViewHolder {
